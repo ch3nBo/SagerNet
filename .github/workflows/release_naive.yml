@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [ armeabi-v7a, arm64-v8a, x86, x86_64 ]
+        arch: [arm64-v8a]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -77,30 +77,14 @@ jobs:
         uses: actions/checkout@v3
       - name: Fetch Status
         run: git submodule status 'plugin/naive/*' > naive_status
-      - name: Naive Cache (armeabi-v7a)
-        uses: actions/cache@v3
-        with:
-          path: |
-            plugin/naive/src/main/jniLibs/armeabi-v7a
-          key: naive-armeabi-v7a-${{ hashFiles('bin/plugin/naive/*', 'naive_status') }}
+
       - name: Naive Cache (arm64-v8a)
         uses: actions/cache@v3
         with:
           path: |
             plugin/naive/src/main/jniLibs/arm64-v8a
           key: naive-arm64-v8a-${{ hashFiles('bin/plugin/naive/*', 'naive_status') }}
-      - name: Naive Cache (x86)
-        uses: actions/cache@v3
-        with:
-          path: |
-            plugin/naive/src/main/jniLibs/x86
-          key: naive-x86-${{ hashFiles('bin/plugin/naive/*', 'naive_status') }}
-      - name: Naive Cache (x86_64)
-        uses: actions/cache@v3
-        with:
-          path: |
-            plugin/naive/src/main/jniLibs/x86_64
-          key: naive-x86_64-${{ hashFiles('bin/plugin/naive/*', 'naive_status') }}
+
       - name: Gradle cache
         uses: actions/cache@v3
         with:
